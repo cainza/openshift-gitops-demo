@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: userx-dev
     name: in-cluster
-  project: workshop
+  project: default
   source:
     path: content/modules/ROOT/examples/coolstore/overlays/dev
     repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop.git

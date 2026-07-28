@@ -8,7 +8,7 @@ spec:
   destination:
     namespace: userx-stage
     name: in-cluster
-  project: workshop
+  project: default
   source:
     path: content/modules/ROOT/examples/coolstore/overlays/stage
     repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop.git
