@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: openshift-gitops
     name: in-cluster
-  project: workshop
+  project: default
   source:
     path: app-of-apps/base
     repoURL: https://github.com/cainza/openshift-gitops-demo.git
