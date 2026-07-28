@@ -6,7 +6,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io  
 spec:
   destination:
-    namespace: userx-stage
+    namespace: coolstore-stage
     name: in-cluster
   project: default
   source:
@@ -17,3 +17,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

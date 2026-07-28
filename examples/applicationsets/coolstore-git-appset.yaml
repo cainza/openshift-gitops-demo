@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: web
+  namespace: $USER-argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop
+      revision: HEAD
+      directories:
+      - path: content/modules/ROOT/examples/coolstore-web/overlays/*
+      values:
+        user: $USER
+  template:
+    metadata:
+      name: web-{{.path.basename}}
+      namespace: '{{ .values.user }}-argocd'
+    spec:
+      destination:
+        name: in-cluster
+        namespace: '{{ .values.user }}-{{.path.basename}}'
+      project: workshop
+      source:
+        path: '{{.path.path}}'
+        repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop
+        targetRevision: main
+        kustomize:
+          patches:
+            - target:
+                kind: Deployment
+                name: web
+              patch: |-
+                - op: replace
+                  path: /spec/template/spec/containers/0/env/0/value
+                  value: 'gateway-vertx-{{ .values.user }}-{{.path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true          

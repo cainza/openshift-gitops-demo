@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: workshop
+  namespace: user%USERNUM%-argocd
+spec:
+  description: Team%USERNUM%'s Project
+  clusterResourceBlacklist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: operators.coreos.com
+    kind: '*'
+  - group: operator.openshift.io
+    kind: '*'
+  - group: storage.k8s.io
+    kind: '*'
+  destinations:
+  - namespace: user%USERNUM%-dev
+    server: https://kubernetes.default.svc
+  - namespace: user%USERNUM%-stage
+    server: https://kubernetes.default.svc
+  - namespace: user%USERNUM%-prod
+    server: https://kubernetes.default.svc
+  - namespace: user%USERNUM%-argocd
+    server: https://kubernetes.default.svc
+  sourceRepos:
+  - https://github.com/OpenShiftDemos/advanced-gitops-workshop
+  - https://github.com/gitops-examples/getting-started
+  roles:
+    - description: Team%USERNUM% Admins
+      name: admin
+      groups:
+        - team%USERNUM%
+      policies:
+        - p, proj:workshop:admin, applications, *, workshop/*, allow
+        - p, proj:workshop:admin, exec, create, workshop/*, allow

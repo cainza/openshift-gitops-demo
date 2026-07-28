@@ -7,9 +7,9 @@ metadata:
     - resources-finalizer.argocd.argoproj.io  
 spec:
   destination:
-    namespace: coolstore-dev
+    namespace: userx-dev
     name: in-cluster
-  project: default
+  project: workshop
   source:
     path: content/modules/ROOT/examples/coolstore/overlays/dev
     repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop.git
@@ -18,5 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
