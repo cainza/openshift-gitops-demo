@@ -2,38 +2,38 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: coolstore
-  namespace: openshift-gitops
+  namespace: %USER%-argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground 
 spec:
   destination:
-    namespace: openshift-gitops
+    namespace: %USER%-argocd
     name: in-cluster
   project: workshop
   source:
-    path: app-of-apps/base
-    repoURL: https://github.com/cainza/openshift-gitops-demo.git
+    path: content/modules/ROOT/examples/app-of-apps/base
+    repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop
     targetRevision: HEAD
     kustomize:
       patches:
         - patch: |-
             - op: replace
               path: /spec/destination/namespace
-              value: coolstore-demo-dev
+              value: %USER%-dev
           target:
             kind: Application
-            name: coolstore-demo-dev
+            name: coolstore-dev
         - patch: |-
             - op: replace
               path: /spec/destination/namespace
-              value: coolstore-demo-stage
+              value: %USER%-stage
           target:
             kind: Application
             name: coolstore-stage
         - patch: |-
             - op: replace
               path: /spec/destination/namespace
-              value: coolstore-demo-prod
+              value: %USER%-prod
           target:
             kind: Application
             name: coolstore-prod
