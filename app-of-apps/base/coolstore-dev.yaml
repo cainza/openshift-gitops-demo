@@ -11,8 +11,8 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: content/modules/ROOT/examples/coolstore/overlays/dev
-    repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop.git
+    path: examples/coolstore/overlays/dev
+    repoURL: https://github.com/cainza/openshift-gitops-demo.git
     targetRevision: HEAD
   syncPolicy:
     automated:
