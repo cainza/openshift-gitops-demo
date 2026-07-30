@@ -15,8 +15,6 @@ spec:
     repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop.git
     targetRevision: HEAD
   syncPolicy:
-    prune: false
-    selfHeal: false
-    enabled: false
-    syncOptions:
-      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

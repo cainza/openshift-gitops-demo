@@ -37,6 +37,13 @@ spec:
           target:
             kind: Application
             name: coolstore-prod
+        - patch: |-
+            - op: replace
+              path: /spec/syncPolicy/automated
+              value: coolstore-demo-prod
+          target:
+            kind: Application
+            name: {}
 syncPolicy:
   automated:
     prune: true
