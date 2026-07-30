@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: coolstore-apps
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list: 
+      elements:
+      - environment: dev 
+      - environment: stage
+      - environment: prod
+  goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
+  project: default
+  template: 
+    metadata:
+      name: coolstore-{{.environment}} 
+      namespace: USER_PLACEHOLDER-argocd
+    spec:
+      destination:
+        name: in-cluster
+        namespace: USER_PLACEHOLDER-{{.environment}}
+      project: workshop
+      source:
+        path: content/modules/ROOT/examples/coolstore/overlays/{{.environment}}
+        repoURL: https://github.com/OpenShiftDemos/advanced-gitops-workshop
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

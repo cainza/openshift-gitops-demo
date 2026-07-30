@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: coolstore
+  name: coolstore-app-of-apps
   namespace: openshift-gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground 
@@ -37,7 +37,8 @@ spec:
           target:
             kind: Application
             name: coolstore-prod
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: false
+    enabled: false
